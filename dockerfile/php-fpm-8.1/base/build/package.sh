@@ -19,4 +19,4 @@ curl http://nomphp.pizepei.com/docker/package/swoole-4.8.7.tgz >>             /h
 curl http://nomphp.pizepei.com/docker/package/xhprof-2.3.5.tgz >>             /home/build/package/xhprof-2.3.5.tgz
 curl http://nomphp.pizepei.com/docker/package/xlswriter-1.5.1.tgz >>          /home/build/package/xlswriter-1.5.1.tgz
 curl http://nomphp.pizepei.com/docker/package/amqp-1.11.0.tgz >>              /home/build/package/amqp-1.11.0.tgz
-
+curl http://nomphp.pizepei.com/docker/package/xdebug-3.1.3.tgz >>             /home/build/package/xdebug-3.1.3.tgz

@@ -55,6 +55,9 @@ echo -e "\033[5;34m 非必要扩展 xhprof  \033[0m" \
      && pecl install             /home/build/package/xhprof-2.3.5.tgz \
      && docker-php-ext-enable    xhprof
 
+echo -e "\033[5;34m 非必要扩展  \033[0m" \
+     && pecl install             /home/build/package/xdebug-3.1.3.tgz \
+     && docker-php-ext-enable    xdebug
 
 apk del   postgresql-dev
 apk del   bzip2-dev bzip2
