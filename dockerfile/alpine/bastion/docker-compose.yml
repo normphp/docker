@@ -1,0 +1,19 @@
+version: '3.3'
+services:
+  bastion:
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: ${BASTION_BUILD}
+      args:
+        - ROOT_PASSWORD=${ROOT_PASSWORD}
+    ports:
+      - "${BASTION__SSH_PORTS}:22"
+    networks:
+      - ${NETWORKS}
+    stdin_open: true
+    tty: true
+    restart: always
+networks:
+  normphp:
