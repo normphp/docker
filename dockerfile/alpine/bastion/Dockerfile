@@ -2,7 +2,6 @@ FROM alpine:3.15
 
 ARG   ROOT_PASSWORD='123'
 COPY ./password.sh /password.sh
-COPY ./hostname.txt /hostname.txt
 
 RUN cat /etc/apk/repositories \
         && echo -e "\033[5;34m repositories \033[0m"  \
@@ -24,7 +23,7 @@ RUN cat /etc/apk/repositories \
     && ssh-keygen -t ed25519 -P "" -f /etc/ssh/ssh_host_ed25519_key \
 && echo hostname \
 && date \
-&& echo "bastion-alpine" > /etc/hostname  \
+&& echo "bastion" > /etc/hostname  \
 && echo hostname \
 && /bin/sh /password.sh && rm -rf  /password.sh
 CMD ["/usr/sbin/sshd", "-D"]
