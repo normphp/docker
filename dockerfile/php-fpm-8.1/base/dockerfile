@@ -1,32 +1,11 @@
-FROM php:8.1-fpm-alpine3.15 as php-ext
+FROM php:8.1.4-fpm-alpine3.15
 COPY ./build/*.sh  /home/build/
-COPY ./build/docker-php-*  /home/build/
-RUN   /home/build/package.sh  \
-    &&  /home/build/variate.sh \
-    &&  /home/build/install-ext-base.sh \
-    &&  docker-php-source delete \
+RUN chmod +x /home/build/*.sh \
+    && /home/build/package.sh  \
+    && /home/build/variate.sh  \
+    && /home/build/install-ext-base.sh  \
+    && docker-php-source delete \
     && rm -rf /var/cache/*      \
     && rm -rf /tmp/*            \
-    && rm -rf /home/build/*     \
-    && rm -rf /usr/src/*        \
+    && rm -rf /home/*     \
     && php -m
-
-
-FROM alpine:3.15
-COPY --from=php-ext /usr /usr
-# UId 1000
-RUN set -eux; \
-    	    adduser -u 82 -D -S -G www-data www-data \
-            && set -eux; \
-        	    mkdir -p "/usr/local/etc/php/conf.d"; \
-        	    [ ! -d /var/www/html ]; \
-        	    mkdir -p /var/www/html; \
-        	    chown www-data:www-data /var/www/html; \
-        	    chmod 777 /var/www/html
-ENTRYPOINT ["docker-php-entrypoint"]
-WORKDIR /www
-STOPSIGNAL SIGQUIT
-EXPOSE 9000
-CMD ["php-fpm"]
-
-
