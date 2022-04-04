@@ -1,9 +1,17 @@
 FROM alpine:3.15
 
 ARG   ROOT_PASSWORD='123'
-COPY ./password.sh /password.sh
-
-RUN cat /etc/apk/repositories \
+RUN   echo "#!/bin/bash" > /password.sh  \
+&&  echo "expect <<EOF" >> /password.sh  \
+&&  echo "set timeout 6" >> /password.sh \
+&&  echo "spawn  passwd root" >> /password.sh \
+&&  echo "expect {" >> /password.sh \
+&&  echo '     "New password:" { send "$ROOT_PASSWORD\n"; exp_continue;}' >> /password.sh \
+&&  echo '     "Retype password:" { send "$ROOT_PASSWORD\n"; }' >> /password.sh \
+&&  echo "}" >> /password.sh \
+&&  echo "expect eof" >> /password.sh \
+&&  echo "EOF" >> /password.sh \
+&& cat /etc/apk/repositories \
         && echo -e "\033[5;34m repositories \033[0m"  \
         && echo "https://mirrors.ustc.edu.cn/alpine/v3.15/main"              > /etc/apk/repositories  \
         && echo "https://mirrors.ustc.edu.cn/alpine/v3.15/community"         >> /etc/apk/repositories \
